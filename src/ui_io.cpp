@@ -499,7 +499,6 @@ void waitForContinueKey(int line_number) {
 // a certain point, sleep for a second. There would need to be a way of resetting
 // the count, with a call made for commands like run or rest.
 bool checkForNonBlockingKeyPress(int microseconds) {
-#ifdef _WIN32
     (void) microseconds;
 
     // Ugly non-blocking read...Ugh! -MRC-
@@ -508,28 +507,6 @@ bool checkForNonBlockingKeyPress(int microseconds) {
     timeout(-1);
 
     return result > 0;
-#else
-    struct timeval tbuf{};
-    int ch;
-    int smask;
-
-    // Return true if a read on descriptor 1 will not block.
-    tbuf.tv_sec = 0;
-    tbuf.tv_usec = microseconds;
-
-    smask = 1; // i.e. (1 << 0)
-    if (select(1, (fd_set *) &smask, (fd_set *) 0, (fd_set *) 0, &tbuf) == 1) {
-        ch = getch();
-        // check for EOF errors here, select sometimes works even when EOF
-        if (ch == -1) {
-            eof_flag++;
-            return false;
-        }
-        return true;
-    }
-
-    return false;
-#endif
 }
 
 // Find a default user name from the system.
@@ -537,112 +514,15 @@ void getDefaultPlayerName(char *buffer) {
     // Gotta have some name
     const char *defaultName = "X";
 
-#ifdef _WIN32
-    unsigned long bufCharCount = PLAYER_NAME_SIZE;
+    unsigned int bufCharCount = PLAYER_NAME_SIZE;
 
     if (!GetUserName(buffer, &bufCharCount)) {
         (void)strcpy(buffer, defaultName);
     }
-#else
-    char *p = getlogin();
-
-    if ((p != nullptr) && (p[0] != 0)) {
-        (void) strcpy(buffer, p);
-    } else {
-        struct passwd *pwline = getpwuid((int) getuid());
-        if (pwline != nullptr) {
-            (void) strcpy(buffer, pwline->pw_name);
-        }
-    }
-
-    if (buffer[0] == 0) {
-        (void) strcpy(buffer, defaultName);
-    }
-#endif
 }
-
-#ifndef _WIN32
-// On unix based systems we should expand `~` to the users home path,
-// otherwise on Windows we can ignore all of this. -MRC-
-
-// undefine these so that tfopen and topen will work
-#undef fopen
-#undef open
-
-// open a file just as does fopen, but allow a leading ~ to specify a home directory
-FILE *tfopen(const char *file, const char *mode) {
-    char expanded[1024];
-    if (tilde(file, expanded)) {
-        return (fopen(expanded, mode));
-    }
-    errno = ENOENT;
-    return nullptr;
-}
-
-// open a file just as does open, but expand a leading ~ into a home directory name
-int topen(const char *file, int flags, int mode) {
-    char expanded[1024];
-    if (tilde(file, expanded)) {
-        return (open(expanded, flags, mode));
-    }
-    errno = ENOENT;
-    return -1;
-}
-
-// expands a tilde at the beginning of a file name to a users home directory
-bool tilde(const char *file, char *expanded) {
-    if (file == nullptr) {
-        return false;
-    }
-
-    *expanded = '\0';
-
-    if (*file == '~') {
-        char user[128];
-        struct passwd *pw = nullptr;
-        int i = 0;
-
-        user[0] = '\0';
-        file++;
-        while (*file != '/' && i < (int) sizeof(user)) {
-            user[i++] = *file++;
-        }
-        user[i] = '\0';
-        if (i == 0) {
-            char *login = getlogin();
-
-            if (login != nullptr) {
-                (void) strcpy(user, login);
-            } else if ((pw = getpwuid(getuid())) == nullptr) {
-                return false;
-            }
-        }
-        if (pw == nullptr && (pw = getpwnam(user)) == nullptr) {
-            return false;
-        }
-        (void) strcpy(expanded, pw->pw_dir);
-    }
-
-    (void) strcat(expanded, file);
-
-    return true;
-}
-
-#endif
 
 // Check user permissions on Unix based systems,
 // or if on Windows just return. -MRC-
 bool checkFilePermissions() {
-#ifndef _WIN32
-    if (0 != setuid(getuid())) {
-        perror("Can't set permissions correctly!  Setuid call failed.\n");
-        return false;
-    }
-    if (0 != setgid(getgid())) {
-        perror("Can't set permissions correctly!  Setgid call failed.\n");
-        return false;
-    }
-#endif
-
     return true;
 }

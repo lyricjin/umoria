@@ -9,11 +9,6 @@
 // Sets up curses for the correct system.
 // clang-format off
 
-#ifdef _WIN32
-  // this is defined in Windows and also in ncurses
-  #undef KEY_EVENT
-  #include <ncurses/ncurses.h>
-#else
-  #include <ncurses.h>
-#endif
+#undef KEY_EVENT
+#include <ncurses/ncurses.h>
 

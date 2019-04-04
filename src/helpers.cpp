@@ -128,17 +128,18 @@ bool stringToNumber(const char *str, int &number) {
     long num = strtol(str, &endptr, 10);
 
     if (errno == ERANGE) {
-        switch (num) {
-            case LONG_MIN:
-                // underflow
-                break;
-            case LONG_MAX:
-                // overflow
-                break;
-            default:
-                // impossible
-                assert(false);
-        }
+        // switch (num) {
+        //     case LONG_MIN:
+        //         // underflow
+        //         break;
+        //     case LONG_MAX:
+        //         // overflow
+        //         break;
+        //     default:
+        //         // impossible
+        //         assert(false);
+        // }
+        assert(false);
         return false;
     }
 
@@ -164,9 +165,5 @@ void humanDateString(char *day) {
     time_t now = time(nullptr);
     struct tm *datetime = localtime(&now);
 
-#ifdef _WIN32
     strftime(day, 10, "%a %b %d", datetime);
-#else
-    strftime(day, 10, "%a %b %e", datetime);
-#endif
 }
