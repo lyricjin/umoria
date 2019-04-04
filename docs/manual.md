@@ -2,7 +2,6 @@
 
 _Robert A. Koeneke's classic roguelike dungeon crawler._
 
-
 Contents
 
 1. Introduction
@@ -21,8 +20,9 @@ Contents
 14. Contributors
 15. Umoria Licence
 
-
 ## 1. Introduction
+
+## 1. 基础介绍
 
 The game of *moria* is a single player dungeon simulation. A player may
 choose from a number of races and classes when creating a character, and
@@ -30,26 +30,33 @@ then *run* that character over a period of days, weeks, even months,
 attempting to win the game by defeating the Balrog which lurks in the
 deeper levels.
 
+Moria 是一个单人地下城模拟游戏。创建角色的时候可以有多个种族、职业的选择。使用自己的角色在游戏中可以玩好多天、甚至好多星期、好几个月。目的就是要打败潜伏在地牢深处的 Balrog。
+
 The character will begin the adventure on the town level where supplies,
 weapons, armor, and magical devices can be acquired by bartering with
 various shop owners. After preparing for this adventure, the character
 can descend into the dungeons of *moria* where fantastic adventures
 await!
 
+游戏开始的时候，玩家出生在城镇中，这里有各种各样的补给，比如：武器、装甲、魔法设备等等。可以从各种各样的商人那里买到这些东西。准备好装备，就可以进入 Moria地牢，开始一场奇幻的冒险了。
+
 Before beginning an adventure, this document should be read carefully.
 The game of *moria* is a complicated game (but not as complicated as
 other roguelikes), and will require a dedicated player to win.
 
+开始冒险之前，好好看看这份文档吧。Moria是一个复杂的游戏（但是比很多其他的roguelike游戏简单多了），干掉地牢深处的 Balrog 可不是个容易的事情。
 
 ## 2. Running The Game
 
+## 2. 如何运行游戏
 
     umoria [ -h ] [ -v ] [ -r ] [ -d ] [ -n ] [ -w ] [ -s ] [ SAVEGAME ]
-
 
 By default, *moria* will save and restore games from a file called
 `game.sav` in the directory where the game is located. The save file
 can also be explicitly specified on the command line.
+
+游戏目录下有一个 game.sav 文件存储了游戏的数据，可以通过命令行参数设置具体的数据文件名称。
 
 When the `-n` option is used, *moria* will create a new game, ignoring any
 save file which may already exist. This works best when a save file name
@@ -57,13 +64,19 @@ is specified on the command line, as this will prevent *moria* from
 trying to overwrite the default save file (if it exists) when saving a
 game.
 
+-n 表示创建一个新的游戏，手动制定一个数据文件名称可以避免默认的存档被覆盖了。
+
 Movement in various directions is accomplished by pressing the numeric keypad
 keys. When `-r` is specified, movement is accomplished in the same way as the
 original _Rogue_ game (`hjkl`). This option will override defaults stored in the
 save file.
 
+默认的角色移动按钮是数字键盘上面的按键，如果使用了 -r 参数，移动操作就会使用经典 _Rogue_ 游戏中使用的 (`hjkl`)。这个选项会存在游戏的存档数据文件里面。
+
 When `-d` is specified, *moria* displays all of the scores in the score
 file and exits.
+
+-d 指的是让游戏显示所有的分数记录，然后就退出了，这个是用来显示历史分数用的。
 
 When `-w` is specified, *moria* will start up in wizard mode. Dead
 characters can be resurrected using this option when starting the game.
@@ -71,18 +84,29 @@ Resurrected characters are teleported to the town level and given zero
 hit-points. Wizard mode is intended for debugging the game, and for
 experimenting with new features.
 
+-w 会启动一个wizard模式，能够让死亡的角色复活，重新回到城镇。这个功能一般是用来调试或者体验新功能用的。
+
 *Using wizard mode to win the game is considered cheating. Games played with
 wizard mode are not scored.*
+
+使用 wizard模式 获得游戏胜利，那就是作弊，这种模式获得的分数记录不会被记下来。
 
 To make random events happen in a predictable manner a `seed` number can be
 given with the `-s` option (only for new games).
 
+-s 可以设置随机数的种子，可以让游戏反复的体验相同的随机事件。
+
 Use `-v` to show the current version of Umoria.
+
+-v 显示当前 moria 的版本号。
 
 Use `-h` to show the help screen.
 
+-h 显示帮助屏幕。
 
 ## 3. The Character
+
+## 3. 角色
 
 All characters have six main attributes which modify their basic
 abilities. These six attributes, called *stats*, are *strength*,
@@ -96,11 +120,15 @@ average characters, *moria* stats will average about 13, and are further
 adjusted by race and class. Some races are just naturally better at
 being certain classes, as will be shown later.
 
+每个角色都有6个基础属性。这个属性在游戏中叫做 *stats*，他们是 力量、智力、智慧、敏捷、体力、魅力。属性值的范围在3~18之间。在最高等级，属性值还会得到一个0~100的调整，属性的最大值是18/100。18/100相当于是19，18/00相当于就是18.因为玩家的角色比游戏中普通的角色强，moria的平均属性在13左右，在此基础上还会有一些种族和职业加值。有的种族天生就适合某些职业。
+
 In addition to the more visible stats, each character has certain
 abilities which are mainly determined by their race, class, and level,
 but are also modified by their stats. The abilities are *fighting*,
 *throwing/bows*, *saving throw*, *stealth*, *disarming*, *magical
 devices*, *perception*, *searching*, and *infra-vision*.
+
+角色的能力强弱会收到角色属性的影响，这些能力包括：近战、远程、豁免、隐身、解除陷阱、魔法武器、感知、搜索、夜视能力。
 
 Characters will be assigned an early history, with money and a social
 class based on that history. Starting money is assigned based on
@@ -108,19 +136,26 @@ history, charisma, and somewhat upon the average of a character’s stats.
 A character with below average stats will receive extra money to help
 them survive the first adventure.
 
+每个角色会拥有一个历史故事，角色拥有的金钱和社会背景来自于自己的历史故事。属性值差的角色会多发点钱补偿他。
+
 Each character will also have physical attributes such as race, height,
 weight, sex, and a physical description. None of these, except weight,
 play any part in the game other than to give the player a "feeling" for
 their character. Weight is used for computing carrying capacity and also
 for bashing.
 
+每个角色还会有自己的物理属性，比如：种族、身高、体重、性别，以及一些物理描述。体重会决定角色的载重能力以及推动物体的能力。
+
 Finally, each character is assigned *hit-points* based on their race,
 class, and constitution. Spell casters will also receive *mana* which is
 expended when casting spells. Mana is based on Wisdom for Priests and
 Intelligence for Mages.
 
+每个角色会根据自己的种族、职业、体力得到初始的HP。法师还会拥有mana值用来释放魔法。牧师的mana值取决于他的智慧，法师的mana值取决于他的智力。
 
 ### 3.1 Character Stats
+
+### 3.1 角色属性
 
 #### `STR`
 
@@ -129,6 +164,8 @@ combat. A high strength can improve the chances of hitting, and the
 amount of damage done with each hit. Characters with low strengths
 may receive penalties. Strength is also useful in tunneling, body
 and shield bashing, and in carrying heavy items.
+
+力量对近战武器影响非常大。力量大有更高的击中几率，能造成更大的伤害。力量过低还会有不利的惩罚。力量高还可以有助于开门、格挡、搬动重物等等。
 
 #### `INT`
 
@@ -139,6 +176,8 @@ learned by mages with intelligences under 8. Intelligence also
 modifies a character’s chance of disarming traps, picking locks, and
 using magic devices.
 
+智力是法师的主要属性，高智力能增加学习法术的成功率，能让法师携带更多的法术。智力小于8，就不能学习法术了。智力高的人能够解除陷阱、开锁，还能使用魔法武器。
+
 #### `WIS`
 
 Wisdom is the prime stat of a priest. A high wisdom increases the
@@ -146,6 +185,8 @@ chance of receiving new spells from a priest’s deity, and it also
 increases the amount of mana a priest has. No spell may be learned
 by priests with wisdom under 8. Wisdom also modifies a character’s
 chance of resisting magical spells cast upon their person.
+
+智慧是牧师的主要属性。高智慧能够增加学习神术的成功率以及携带神术的数量。智慧小于8就不能施展神术了。智慧高的角色有更高的几率可以抵抗魔法伤害。
 
 #### `DEX`
 
@@ -156,12 +197,16 @@ chances of hitting with any weapon and dodging blows from enemies.
 Dexterity is also useful in picking locks, disarming traps, and
 protection from pick pockets.
 
+敏捷可以提升轻武器的伤害，提升轻武器的击中几率，还能提高闪避的几率。敏捷高也有助于开锁、解除陷阱，还能防盗。
+
 #### `CON`
 
 Constitution is a character’s ability to resist damage to the body,
 and to recover from damage received. Therefore a character with a
 high constitution will receive more hit points, and be more
 resistant to poisons.
+
+体力值可以让角色有更高的HP，可以有更强的毒素抵抗能力。
 
 #### `CHR`
 
@@ -171,6 +216,7 @@ from store owners, whereas a character with a very low charisma will
 be robbed blind. A high charisma will also mean more starting money
 for the character.
 
+魅力可以让角色有更好的商店优惠，还能有更高的启动资金。
 
 ### 3.2 Character Sex
 
@@ -181,6 +227,7 @@ counterparts. No adjustments to stats or abilities are made because of
 the gender of a character. Female characters start out with slightly
 more money than male characters to help offset the weight penalty.
 
+女性角色体重更轻，但是初始的时候更有钱。
 
 ### 3.3 Character Abilities
 
@@ -188,6 +235,8 @@ Characters possess nine different abilities which can help them to
 survive. The starting abilities of a character are based upon race and
 class. Abilities may be adjusted by high or low stats, and may increase
 with the level of the character.
+
+角色有9中不同的能力。能力初始值取决于他的种族、职业。能力值还会受到属性值的修正以及角色等级的修正。
 
 #### `Fighting`
 
@@ -198,6 +247,8 @@ blows per round with lighter weapons. Strength and dexterity both
 modify the ability to hit an opponent. This skill increases with the
 level of the character.
 
+近战能力让角色更能驾驭近战武器。如果角色的力量、敏捷够高的话，用轻武器可以一回合产生多次伤害。
+
 #### `Throwing/Bows`
 
 Using ranged missile weapons and throwing objects is included in
@@ -205,6 +256,8 @@ this skill. Different stats apply to different weapons, but this
 ability may modify the distance an object is thrown/fired, the
 amount of damage done, and the ability to hit a creature. This skill
 increases with the level of the character.
+
+远程武器的能力让角色可以更好地驾驭远程武器。这个能力决定了角色的射程，造成的伤害，以及命中率。远程武器的能力会随着等级增长。
 
 #### `Saving Throw`
 
@@ -216,6 +269,8 @@ the character, but then most high level creatures are better at
 casting spells, so it tends to even out. A high wisdom also
 increases this ability.
 
+豁免能力让角色可以抵抗魔法伤害。但是角色自己对自己瞎施法，是豁免不了的。豁免能力会随着等级提升，智慧也会提升豁免能力。
+
 #### `Stealth`
 
 The ability to move silently about is very useful. Characters with
@@ -225,6 +280,8 @@ entirely, allowing a character to avoid certain fights. This skill
 is based entirely upon race and class, and will never improve unless
 magically enhanced.
 
+隐身或者叫潜行更合适。潜行可以让角色先攻，让角色避免战斗。这个能力会受种族和职业的影响，魔法也可以增强这个能力。
+
 #### `Disarming`
 
 Disarming is the ability to remove traps (safely), and includes
@@ -232,6 +289,8 @@ picking locks on traps and doors. A successful disarming will gain
 the character some experience. A trap must be found before it can be
 disarmed. Dexterity and intelligence both modify the ability to
 disarm, and this ability increases with the level of the character.
+
+解除陷阱的时候可以让角色获得经验值，敏捷和智力都能提升这个能力，这个能力会跟着等级提升。
 
 #### `Using Magical Devices`
 
@@ -241,11 +300,15 @@ much better at using a magical device than say a warrior. This skill
 is modified by intelligence, and increases with the level of the
 character.
 
+使用法杖、手杖都需要魔法武器的能力。这个能力会受等级以及智力的影响。
+
 #### `Perception`
 
 Perception is the ability to notice something without actively
 seeking it out. This skill is based entirely upon race and class,
 and will never improve unless magically enhanced.
+
+感知能力可以帮助玩家发现各种东西，这个能力值只和种族、职业以及魔法增益有关。感知能力的具体作用我还要去代码里面找找看。
 
 #### `Searching`
 
@@ -254,6 +317,8 @@ traps on chests. Rogues are the best at searching, but mages,
 rangers, and priests are also good at it. This skill is based
 entirely upon race and class, and will never improve unless
 magically enhanced.
+
+搜索能力我怎么觉得和感知能力是一回事。可以帮助角色找到魔法门、陷阱等等。
 
 #### `Infra-Vision`
 
@@ -267,12 +332,15 @@ unless lit up by a light source. All non-human races have innate
 infra-vision ability. Humans can gain infra-vision only if it is
 magically enhanced.
 
+夜视能力可能翻译错了，这个能力帮助角色看到热源。整个地牢都很冷啊，夜视能力会让玩家看到热力图，所以应该叫热视能力。moria里面的冷血动物通过热视是看不到的。大部分非人类都有这种能力，人类可以通过魔法来获得这个能力。
 
 ### 3.4 Choosing A Race
 
 There are eight different races that can be chosen from in *moria*. Some
 races are restricted as to what profession they may be, and each race
 has its own adjustments to a character’s stats and abilities.
+
+有8个不同的种族可以选择。种族会有自己的属性调整值、能力调整值。
 
 #### `Human`
 
@@ -282,12 +350,16 @@ everything. Humans tend to go up levels faster than any other race,
 because of their shorter life spans. No racial adjustments occur to
 characters choosing human.
 
+人类是最基础的种族，其他的都是相对于他设计的。人类的能力非常平衡，等级成长也很快，因为他的寿命很短啊。人类没什么种族相关的数值修正。
+
 #### `Half-Elf`
 
 Half-elves tend to be smarter and faster than a human, but not as
 strong. Half-elves are slightly better at searching, disarming,
 perception, stealth, and magic, but they are not as good at hand
 weapons. Half-elves may choose any class.
+
+半精灵比人类更聪明更敏捷，但是不怎么强壮。他们擅长搜索、解除陷阱、感知、潜行还有魔法，但是不擅长手持武器，半精灵可以从事所有的职业。
 
 #### `Elf`
 
@@ -296,6 +368,8 @@ They tend to be smarter and faster than either humans or half-elves,
 and also have better wisdom. Elves are better at searching,
 disarming, perception, stealth, and magic, but they are not as good
 at hand weapons. Elves may choose any class except Paladin.
+
+精灵擅长魔法，但是不擅长战斗。他们聪明有敏捷并且有着优秀的智慧。他们擅长搜索、解除武器、感知、潜行、魔法。除了圣骑士，精灵可以从事其他所有的职业。
 
 #### `Halfling`
 
@@ -306,6 +380,8 @@ to be called burglars...). They will be much weaker than humans, and
 no good at bashing. Halflings have fair infra-vision, so they can
 detect warm creatures at a distance. Halflings can choose between
 being a warrior, mage, or rogue.
+
+半身人就是霍比特人啦，他们擅长弓箭、投掷，有着不俗的豁免能力。他们擅长搜索、解除陷阱，感知、潜行，他们是厉害的窃贼。他们比人类虚弱很多，没什么力气。他们可以使用热视能力看到热血动物。他们可以成为战士、法师、盗贼。
 
 #### `Gnome`
 
@@ -318,6 +394,8 @@ perception, and stealth. They have lower strength than humans so
 they are not very good at fighting with hand weapons. Gnomes have
 fair infra-vision, so they can detect warm creatures at a distance. A
 gnome may choose between being a warrior, mage, priest, or rogue.
+
+侏儒比爱人个头小比半身人个头大。他们和半身一样在地洞里生活，他们非常擅长施法，有很强的豁免能力。他们擅长搜索、解除陷阱、感知、潜行。他们力气很小，不擅长战斗。他们有着热视能力。侏儒可以成为战士、法师、牧师、盗贼。
 
 #### `Dwarf`
 
@@ -332,6 +410,8 @@ Dwarves are loudmouthed and proud, singing in loud voices, arguing
 with themselves for no good reason, screaming out challenges at
 imagined foes. In other words, Dwarves have a miserable stealth.
 
+爱人是非常强壮的矿工、战士。地牢就是矮人的家，他们是天生的战士和牧师。矮人有着强壮的体魄，但是比人类的行动缓慢，智力也稍差一些。他们对魔法有一定的抵抗能力，他们生活在地底有着不错的热视能力。矮人的嗓门特别大，和他们吵架不是哥明智的选择，他们的潜行能力非常的差。
+
 #### `Half-Orc`
 
 Half-Orcs make excellent warriors, and decent priests, but are
@@ -342,6 +422,8 @@ Half-Orcs do make good priests and rogues, for the simple reason
 that Half-Orcs tend to have great constitutions and lots of
 hit-points.
 
+半兽人是天生的战士，也能成为优秀的牧师，但是非常不擅长魔法。特闷和矮人一样，不擅长潜行、搜索、解除陷阱以及感知。半兽人长得很难看，魅力低下，他们买东西都要花更多的钱。半兽人可以使优秀的牧师或者战士，他们的HP就是天生的多。
+
 #### `Half-Troll`
 
 Half-Trolls are incredibly strong, and have the highest hit points
@@ -350,12 +432,14 @@ make great warriors and iffy priests. They are bad at searching,
 disarming, perception, and stealth. They are so ugly that a Half-Orc
 grimaces in their presence. They also happen to be fun to run...
 
+半巨人非常非常强壮，在所有种族中有着最多的HP。他们愚蠢又缓慢。是非常厉害的战士和牧师。他们做不好搜索、解除陷阱、感知、潜行的事情。和半兽人一样相貌丑陋。玩起来也会很有趣。
 
 #### 3.4.1 Race versus Skills and Stats
 
 Stat, hit dice, and experience points per level modifications due to
 race are listed in the following table.
 
+属性值、HP点数、每等级的经验点数和种族的关系如下表所示。
 
                 Str  Int  Wis  Dex  Con  Chr  Hit Dice  Rqd Exp/level
 
@@ -368,10 +452,10 @@ race are listed in the following table.
     Half-Orc    +2   -1    0    0   +1   -4      10         +10%
     Half-Troll  +4   -4   -2   -4   +3   -6      12         +20%
 
-
 Racial abilities as compared to each other, with 1 the lowest, or worst,
 and 10 the highest, or best, are listed in the following table.
 
+技能等级和种族的关系如下表所示，1是最差的，10是最好的。
 
                Disarm Search Stealth Percep Fight Bows Save Infra
 
@@ -385,7 +469,6 @@ and 10 the highest, or best, are listed in the following table.
     Half-Troll    1      1      1       1    10     1    1  30 feet
 
 
-
 ### 3.5 Choosing A Class
 
 Once a race has been chosen, the player will need to pick a class. Some
@@ -393,6 +476,8 @@ classes will not be available to certain races, for instance, a
 Half-Troll cannot become a Paladin. Players who are new to the game
 should run a warrior or rogue. Spell casting generally requires a more
 experienced player that is familiar with survival techniques.
+
+选完了种族就开始选职业。有的职业某些种族会无法选择。比如半巨人不能成为圣骑士。新手可以先试试战士或者盗贼。法术职业最好有点游戏经验了再来尝试。
 
 #### `Warrior`
 
@@ -402,6 +487,8 @@ the help of magical devices. Their prime stats are Strength and
 Constitution, and a good Dexterity can really help at times. A
 Warrior will be good at Fighting and Throwing/Bows, but bad at most
 other skills.
+
+战士解决问题的方式通常就是砍砍砍，偶尔会用用魔法武器。他们的主要属性石力量和体质，优秀的敏捷也会很有帮助。战士擅长近战技能和远程武器，但是其他的能力都不咋地。
 
 #### `Mage`
 
@@ -415,6 +502,8 @@ spells cast at them. Intelligence and Dexterity are their primary
 stats. There is no rule that says a mages cannot become good
 fighters, but spells are their true realm.
 
+法师靠着自己的智慧生存。他们需要利用法术在地牢中生存。没有魔法武器的法师是不完整的法师，他们可以更轻松的驾驭高级的魔法武器，并且拥有最强的魔法豁免能力。智力和敏捷是他们的主要属性。不是说法师不能用武器来战斗，但是他们追擅长的就是施法施法。
+
 #### `Priest`
 
 Priests are characters of holy devotion. They explore the dungeon
@@ -426,6 +515,8 @@ with magical devices, preferring to call them instruments of god,
 but is not as good as a mage in their use. Priests have good saving
 throws, and make decent fighters, preferring blunt weapons over
 edged ones. Wisdom and Charisma are the priest’s primary stats.
+
+牧师在地牢里就是来杀死邪恶生物的。牧师施展的法术是神赐予的神术，他们同样熟悉魔法武器，但是没有法师玩的熟练。牧师有着优秀的法术豁免能力，同样也是优秀的战士，喜欢用钝器型的武器，智慧和魅力是他们的主要属性。
 
 #### `Rogue`
 
@@ -441,6 +532,8 @@ devices, but still cannot rely on their performance. Rogues can also
 learn a few spells, but not the powerful offensive spells mages can
 use. A rogue’s primary stats are Intelligence and Dexterity.
 
+盗贼是一些狡猾的家伙，他们熟悉轻型武器。他们是陷阱、开锁大师，聪明的盗贼能够玩转各种各样的装置。盗贼有很强的潜行能力，可以在战斗中抢的先手。盗贼的感知技能比其他职业的人都要强，在搜索技能执行之前他们往往都能提前感知到哪些秘门、陷阱。盗贼比战士、圣骑士更擅长使用魔法武器，但是玩的也不是特别熟练。他们也可以学习少量的法术，但是没有法师那么强。盗贼的主要属性是智力和敏捷。
+
 #### `Ranger`
 
 A Ranger is a warrior/mage. They are good fighters, and the best of
@@ -451,6 +544,8 @@ character, more experience is required for them to advance. Rangers
 have good stealth, good perception, good searching, good saving
 throw, and is good with magical devices. Their primary stats are
 Intelligence and Dexterity.
+
+游侠是法师战士的结合。他们是优秀的战士，是追擅长弓箭的职业。游侠学习法术没有法师厉害，但是除了最强大的法术，其他的法术他们基本也都能学会。游侠是一种双职业，他们需要更多的经验值来成长。他们有着不错的潜行、感知、搜索能力，不错的豁免能力，也能把魔法武器玩的很溜。他们的主要属性点是智力和敏捷。
 
 #### `Paladin`
 
@@ -464,6 +559,7 @@ perception, searching, and magical devices. They have a decent
 saving throw due to their divine alliance. A paladin’s primary stats
 are Strength and Charisma.
 
+圣骑士是战士牧师的结合体。他们是强力的战士，但是不擅长远程武器。他们没有牧师那么快的习得神术，但是也一样能学会所有的神术。圣骑士也是一个双职业，所以需要更多的经验值来成长。他们不擅长潜行、感知、搜索，也不擅长使用魔法武器。他们有着优秀的魔法豁免能力。圣骑士的主要属性是力量和魅力。
 
 #### 3.5.1 Race Versus Class
 
@@ -479,13 +575,14 @@ are Strength and Charisma.
     Half-Orc      Yes      No       Yes      Yes      No       No
     Half-Troll    Yes      No       Yes      No       No       No
 
-
+上述表格列举出了不同的种族可以胜任哪些职业。
 
 #### 3.5.2 Class Versus Skills
 
 Class abilities as compared to each other, with 1 as the lowest, or
 worst, and 10 as the highest, or best are shown in the following table.
 
+下表是不同职业的技能点，1是最低的，10是最高的。
 
                        Save  Stea-        Magic                 Extra
             Fight Bows Throw  lth  Disarm Device Percep Search Exp/lev
@@ -498,7 +595,6 @@ worst, and 10 as the highest, or best are shown in the following table.
     Paladin   9     5    4     2      2      4      2      2      +35%
 
 
-
 ### 3.6 Experience
 
 All characters receive experience during the game. Experience determines
@@ -506,19 +602,28 @@ the level, which determines hit-points, mana points, spells, abilities,
 etc. The amount of experience required to advance a level increases as
 the game is played, according to race and class.
 
+游戏中角色可以获取到经验值。经验值让角色提升等级，等级提升可以增加HP、MP、法术、能力值。不同的种族、职业他们需要不同的经验点数进行升级。
 
 #### 3.6.1 Getting Experience
 
 There are many ways to gain experience. This list shows a few.
 
--   Defeating monsters
--   Disarming traps
--   Picking locks
--   Using a scroll, potion, staff, or wand, for the first time and
-    discovering what it did
--   Casting a spell successfully for the first time
--   Drinking a potion of gain experience
+- Defeating monsters
+- Disarming traps
+- Picking locks
+- Using a scroll, potion, staff, or wand, for the first time and
+  discovering what it did
+- Casting a spell successfully for the first time
+- Drinking a potion of gain experience
 
+获得经验值的方法有：
+
+- 杀怪物
+- 解除陷阱
+- 开锁
+- 初次使用卷轴、药水、法杖、手杖
+- 第一次成功施法
+- 喝经验药水
 
 ## 4. Adventuring
 
@@ -528,32 +633,52 @@ objects, features, and creatures lurking about. In order to direct the
 character through their adventure, the player will enter single
 character commands.
 
+创建好了角色，就开始地牢冒险啦。不同的符号代表了墙、地板、道具、机关、各种各样的生物。
+
 *Moria* symbols and commands each have a help section devoted to them.
 The player should review these sections before attempting an adventure.
 Finally, a description of the town level and some general help on
 adventuring are included.
 
+Moria会用到的符号玩家需要去熟悉一下，然后才能开新的去游玩。
 
 ## 5. Symbols On The Screen
 
 Symbols on the map can be broken down into three categories:
 
-1.  Features of the dungeon such as walls, floor, doors, and traps.
-2.  Objects which can be picked up such as treasure, weapons, armor,
+地图上面的符号主要分3打类型。
+
+---
+
+1. Features of the dungeon such as walls, floor, doors, and traps.
+2. Objects which can be picked up such as treasure, weapons, armor,
     magical devices, etc.
-3.  Creatures which may or may not move about the dungeon, but are
-    mostly harmful to the character’s well-being.
+3. Creatures which may or may not move about the dungeon, but are
+   mostly harmful to the character’s well-being.
+
+---
+
+1. 地牢的基本物体，比如：墙、地板、门、陷阱
+2. 可以拾起来的物体，比如：宝物、武器、装甲、魔法装置等等
+3. 地牢里面的生物
+
+---
 
 Some symbols can be in more than one category. Also note that treasure
 may be embedded in a wall, and the wall must be removed before the
 treasure can be picked up.
 
+有的符号可能属于多个分类，宝物可以挂在墙上，要先把墙移开才能得到宝物。
+
 It will not be necessary to remember all of the symbols and their
 meanings. A simple command, the `/`, will identify any symbol appearing
 on the map. See the section on commands for further help.
 
+不需要记住全部的符号，`/` 命令可以用来查询这些符号的含义。
+
 ### Features
 
+地牢基础特征
 
     .   A floor space, or hidden trap   1   Entrance to General Store
     #   A wall                          2   Entrance to Armory
@@ -565,10 +690,9 @@ on the map. See the section on commands for further help.
     ;   A loose floor stone                 An open pit (Blank)
     %   A mineral vein                  @   The character
 
-
-
 ### Objects
 
+可交互的物体
 
     !   A flask or potion         ?   A scroll
     "   An amulet                 [   Hard armor
@@ -582,10 +706,9 @@ on the map. See the section on commands for further help.
     =   A ring                    ,   Food
     s   A skeleton
 
-
-
 ### Creatures
 
+地牢内的生物
 
     a   Giant Ant           A   Giant Ant Lion
     b   Giant Bat           B   The Balrog
@@ -615,11 +738,10 @@ on the map. See the section on commands for further help.
     z   Zombie              Z
     $   Creeping Coins      ,   Mushroom Patch
 
-
-
 Here is what the screen looks like after a character has been
 adventuring in *moria* for a while:
 
+下面是一个游戏屏幕的例子
 
                                      #            ' #
     Elf                              # ############'#
@@ -644,7 +766,6 @@ adventuring in *moria* for a while:
 
 
                                                                Study 1000 feet
-
 
 The top line is where messages appear about what’s happening in the
 game. The bottom line is a status line, that shows what dungeon depth
@@ -681,6 +802,7 @@ which is more than just 18.
 Finally, the character’s armor class (`AC`) is currently at 55, and has a
 great number of gold pieces.
 
+上面对游戏状态的基本解读做的很好，但是我懒得翻译了，我看完了。
 
 ## 6. Commands
 
@@ -754,6 +876,8 @@ Roguelike command summary.
       @ SHFT ~    Run in direction           @ ~         for movement
     ------------ ------------------------- ------------ -----------------------
 
+有两套命令集，我更喜欢 roguelike 的命令集。
+~ 这个命令怎么用？？ 我需要在游戏中实战一下。
 
 ### 6.1 Special Keys
 
@@ -782,7 +906,6 @@ It is possible to give control character commands in two keystrokes, by
 pressing a `^` followed by the appropriate letter of the alphabet. This
 is useful when running *moria* in circumstances where control characters
 are intercepted by some external process, or by the operating system.
-
 
 ### 6.2 Direction
 
@@ -828,6 +951,7 @@ directional letter will move the character in that direction until
 something interesting happens. The stopping conditions are described
 more completely in the run command description below.
 
+控制角色移动方向的命令也没啥好说的，我喜欢用 hjkl
 
 ### 6.3 Command Counts
 
@@ -852,7 +976,6 @@ counted command or a Run can be terminated a counted command by pressing
 any key. This character is ignored, but it is safest to use a `SPACE` or
 `ESCAPE` which are always ignored as commands.
 
-
 ### 6.4 Selection of objects
 
 Many commands will also prompt for a particular object to be used. For
@@ -872,13 +995,11 @@ described, and you are given the option of confirming or retracting that
 choice. Upper case selection is thus safer, but requires an extra
 keystroke.
 
-
 ### 6.5 Command descriptions
 
 In the following command descriptions, the original style key is given.
 If the roguelike key for that command is different, then it will be
 shown following the original key.
-
 
 #### `B <Dir> (f <Dir>) - Bash.`
 
@@ -909,14 +1030,12 @@ Size and material both affect the damage that a shield will do.
 Bashing can be done with a command-count, but if the character is
 town off-balance, the count will be reset straight away.
 
-
 #### `C - Display character (on screen or saving to a file.)`
 
 This command allows the player to either display the character
 details on the terminal screen, or to save an entire character info
 listing to a file. The character’s history, equipment, and inventory
 list are also included when saving to a file.
-
 
 #### `D <Dir> - Disarm a trap.`
 
@@ -926,7 +1045,6 @@ chance that the blunder will set it off. Traps on chests can only be
 disarmed after firstly finding the trap with the search command.
 This command can have a count.
 
-
 #### `E - Eat some food.`
 
 A character must eat occasionally to remain effective. As a
@@ -935,14 +1053,12 @@ screen saying "`Hungry`". When a character remains hungry for too
 long, they will become weak, and eventually start fainting, and
 finally die of starvation.
 
-
 #### `F - Fill a lamp or lantern with oil.`
 
 When the character is using a lamp for a light source, and has a
 flask of oil in the pack, they may refill the lamp by using this
 command. A lamp is capable of a maximum of 15000 turns of light, and
 each flask has 7500 turns of oil contained in it.
-
 
 #### `G - Gain new spells.`
 
@@ -953,7 +1069,6 @@ rangers must have the magic books containing new spells to be able
 to learn them. Priests and Paladins are given their prayers by their
 gods, and hence do not need a holy book before learning the prayers
 in it. They do need the book in order to use the prayers.
-
 
 #### `L (W) - Location on map.`
 
@@ -968,7 +1083,6 @@ indicates the direction of the display from the character’s current
 position. When this command is exited and the character is not on
 the display, then the display is centered again.
 
-
 #### `M - Map shown reduced size.`
 
 This command will show the entire map, reduced by a factor of nine,
@@ -977,7 +1091,6 @@ screen, only the major dungeon features will be visible. This is
 especially useful for finding where the stairs are in relation to
 the character’s current position. It is also useful for identifying
 unexplored areas.
-
 
 #### `R - Rest for a number of turns.`
 
@@ -1003,7 +1116,6 @@ both hit-points and mana reach their maximum values. As above, the
 character will immediately be awakened if anything interesting
 happens.
 
-
 #### `S (#) - Search mode toggle.`
 
 The Searching toggle will take the character into and out of search
@@ -1016,16 +1128,15 @@ should happen by or attack, search mode will automatically toggled
 off. Search mode can also be turned off by again pressing the `S`
 (or `#`) key.
 
-
 #### `T <Dir> (CTRL+<Dir>) - Tunnel through rock.`
 
 Tunneling (Mining) is a very useful art in the dungeons of *moria*.
 There are four kinds of rock:
 
-  1.  Permanent Rock
-  2.  Granite Rock
-  3.  Magma Intrusion
-  4.  Quartz Veins
+  1. Permanent Rock
+  2. Granite Rock
+  3. Magma Intrusion
+  4. Quartz Veins
 
 Permanent Rock is exactly that, permanent. Granite is very hard,
 therefore hard to dig through, and contains no valuable metals.
@@ -1043,14 +1154,12 @@ good strength also helps.
 
 Tunneling can have a count.
 
-
 #### `V - View scoreboard.`
 
 This command will display the contents of the score board on the
 screen. On a multi-user system, pressing `V` the first time will show
 only those scores from the score board that belong to the current
 user, and pressing `V` again will show all users’ scores.
-
 
 #### `a <Dir> (z <Dir>) - Aim a wand.`
 
@@ -1060,7 +1169,6 @@ character. They will either affect the first object/creature
 encountered, or affect anything in a given direction, depending upon
 the wand. An obstruction such as a door or wall will generally stop
 the effects of a wand from traveling further.
-
 
 #### `b (P) - Browse a book.`
 
@@ -1073,7 +1181,6 @@ mana used up in casting them, and whether or not you know the spell
 or prayer. There are a total of 31 different magical spells in four
 books, and 31 different prayers in four books.
 
-
 #### `c <Dir> - Close a door.`
 
 Non-intelligent and certain other creatures will not be able to open
@@ -1081,7 +1188,6 @@ a door. Therefore shutting doors can be a life saver. To close a
 door, the character must be adjacent to an open door, and broken
 doors cannot be closed. Bashing a closed door will break it and
 leave it permanently open.
-
 
 #### `d - Drop an object from the inventory.`
 
@@ -1092,7 +1198,6 @@ objects of the same kind, the player will be prompted for dropping
 one or all of them. It is possible to directly drop things which you
 are wielding or wearing.
 
-
 #### `e - Display a list of equipment being used.`
 
 Use the Equipment command to display a list of objects currently
@@ -1100,7 +1205,6 @@ being worn or wielded by the character. Each object has a specific
 place where it is placed, and that only one object of each type may
 be used at any one time, excepting rings of which two can be worn,
 one on each hand.
-
 
 #### `f <Dir> (t <Dir>) - Fire/Throw an object/use a missile weapon.`
 
@@ -1123,7 +1227,6 @@ Extra pluses to damage and hitting are gained by wielding the proper
 weapon and throwing the corresponding ammo. A heavy crossbow with
 bolts for example, is a killer...
 
-
 #### `i - Display a list of objects being carried.`
 
 This command displays an inventory of all objects being carried, but
@@ -1132,7 +1235,6 @@ carry up to 22 different kinds of objects in the pack. Depending
 upon strength, the character will be able carry many identical
 objects before hitting the weight limit. After the weight limit is
 exceeded the character will move slower due to the encumbrance.
-
 
 #### `j <Dir> (S <Dir>) - Jam a door with an iron spike.`
 
@@ -1146,7 +1248,6 @@ character to bash it down, so spike doors wisely. The bigger a
 creature is, the easier it can bash a door down. Therefore twenty or
 more spikes might be necessary to slow down a dragon, where one
 spike would slow down a Kobold. This command can be counted.
-
 
 #### `l <Dir> (x <Dir>) - Look in a direction.`
 
@@ -1167,7 +1268,6 @@ When the character sees a creature, the player has the option to
 view a short paragraph of information about prior experiences with
 that creature. See also the section on being attacked.
 
-
 #### `m - Cast a magic spell.`
 
 To cast a spell, a character must have previously learned it, and
@@ -1181,7 +1281,6 @@ spell when there is insufficient mana. Since a character must read
 the spell from a book, they cannot be blind or confused when casting
 a spell, and there must be some light present.
 
-
 #### `o <Dir> - Open a door, chest, or lock.`
 
 To open an object such as a door or chest, the Open command can be
@@ -1190,7 +1289,6 @@ the lock, based on the character’s disarm ability. If an object is
 trapped and the character opens it, the trap will be set off. This
 command can be counted, because the locked object may require
 several tries to open.
-
 
 #### `p - Read a prayer.`
 
@@ -1205,13 +1303,11 @@ when there is insufficient mana. Since a character must read the
 prayer from a book, they cannot be blind or confused when praying,
 and there must be some light present.
 
-
 #### `q - Quaff a potion.`
 
 To drink a potion use the Quaff command. A potion affects the
 character in some manner. The effects of the potion may be
 immediately noticed, or they may be subtle and unnoticed.
-
 
 #### `r - Read a scroll.`
 
@@ -1222,7 +1318,6 @@ scroll and the recharge scroll, have titles which can be read
 without setting them off, and by pressing ESCAPE can be saved for
 future use.
 
-
 #### `s - Search general area one turn.`
 
 The Search command can be used to locate hidden traps and secret
@@ -1232,7 +1327,6 @@ chest before trying to open it because they are generally trapped.
 This command can be counted, and the counted search ends as soon as
 anything is found.
 
-
 #### `t (T) - Take off a piece of equipment.`
 
 Use the Take Off command to remove an object from use, and return it
@@ -1240,19 +1334,16 @@ to the character’s pack, or inventory. Occasionally the character
 will have a cursed item which cannot be removed. Cursed items are
 always bad, and can only be taken off after removing the curse.
 
-
 #### `u (Z) - Use/Zap a staff.`
 
 The Use command will activate a staff. Like scrolls, most staves
 have an area effect. Because staves are generally more powerful than
 most other items, they are also harder to use correctly.
 
-
 #### `v - Display current version of game.`
 
 The Version command displays the credits for the current version of
 *moria*.
-
 
 #### `w - Wear or wield an item being carried.`
 
@@ -1262,7 +1353,6 @@ function, it is automatically removed first; if the character is
 wearing two rings, the player is given a choice of which one to
 remove. An object’s bonuses cannot be gained until it is worn or
 wielded.
-
 
 #### `x (X) - Exchange primary and secondary weapons.`
 
@@ -1274,7 +1364,6 @@ primarily, but needed a sword for close combat, the character could
 wield the sword, use the exchange command to make it the secondary
 weapon, then wield the bow. If the sword was suddenly needed, simply
 use the exchange command to switch between the bow and the sword.
-
 
 #### `/ - Identify a character shown on screen.`
 
@@ -1292,18 +1381,15 @@ creatures may be identified in this way. Typing ESCAPE after the
 paragraph for any creature will abort back to command level. See
 also the section on being attacked.
 
-
 #### `? - Display a list of commands.`
 
 The `?` command displays a quick reference help page on the screen.
-
 
 #### `- - Move without pickup.`
 
 This is followed by a move command, and causes the character to move
 over an object without automatically picking it up. This command can
 be counted.
-
 
 #### `= - Set options.`
 
@@ -1365,7 +1451,6 @@ available options are:
 The setting of all these options persist in the save file, even after
 the character dies.
 
-
 #### `^P - Previous message.`
 
 The Control-P command will redisplay the last message displayed on
@@ -1374,13 +1459,11 @@ will display all of the saved messages. This command can be given a
 count to specify the number of previous messages to View. At
 present, only 22 messages are saved.
 
-
 #### `^K (^Q) - Kill the character.`
 
 To exit the game without saving the character (i.e. killing the
 character) use the Control-K command. Once exited in this manner,
 the character is nonrecoverable.
-
 
 #### `^X - Save the character and exit the game.`
 
@@ -1389,7 +1472,6 @@ Control-X command. Save files will also be generated if the game
 crashes due to a system error. When the character dies, a reduced
 save file is produced containing only the monster memory, and the
 option settings.
-
 
 #### `{ - Inscribe an object.`
 
@@ -1409,13 +1491,11 @@ the inscription `1`, you can switch to the shovel by wielding item
 `1` without checking the full inventory list to find out which item
 the shovel is.
 
-
 #### `! - Shell out of game.`
 
 Use the Shell command `!` to temporarily exit the game to execute
 UNIX or DOS commands. The game can be reentered by typing exit to
 end the spawned process.
-
 
 #### `< - Go up an up staircase.`
 
@@ -1427,7 +1507,6 @@ a staircase will always take the character to a new dungeon area
 except for the town level, which remains the same for the duration
 of the current character’s game.
 
-
 #### `> - Go down a down staircase.`
 
 If the character is on top of a down staircase the `>` command may
@@ -1435,7 +1514,6 @@ be used to go down one level of dungeon depth. There are always two
 or three staircases going down on each level, except the town level
 which has only one. Going down will always take the character to a
 new dungeon area.
-
 
 #### `. <Dir> (shift <Dir>) - Move in direction.`
 
@@ -1483,7 +1561,6 @@ stop. Again, this is an option for nervous players; after all, there
 may be a dragon on the new screen, and running into a dragon can be
 bad for the character’s health.
 
-
 ## 7. The Town Level
 
 The town level is where the character will begin the adventure. The town
@@ -1492,7 +1569,6 @@ a wall which surrounds the town. At the start of the game it will be
 daytime in the town, but later on the character may return to find that
 darkness has fallen. (Note that some spells may act differently in the
 town level.)
-
 
 ### 7.1 Townspeople
 
@@ -1510,14 +1586,12 @@ distance when wandering from store to store. Fights will break out
 though, so be prepared. Since the character grew up in this world of
 intrigue, no experience is awarded for killing on the town level.
 
-
 ### 7.2 Supplies
 
 The character will begin the adventure with some supplies already in the
 backpack. Use the Inventory `i` command to check what these supplies
 are. It will be necessary to buy other supplies before continuing into
 the dungeon, however, so be sure to enter each of the stores.
-
 
 ### 7.3 Town Buildings
 
@@ -1559,7 +1633,6 @@ object, they will add it to their inventory. If it was a bad bargain,
 they simply throw the item away. In any case, the player may receive
 some knowledge of the item if another is encountered.
 
-
 #### `The General Store`
 
 The General Store sells foods, drinks, some clothing, torches,
@@ -1567,13 +1640,11 @@ lamps, oil, shovels, picks, and spikes. All of these items, and some
 others, can be sold back to the General store for money. The
 entrance to the General Store is a `1`.
 
-
 #### `The Armory`
 
 The Armory is where the town’s armor is fashioned. All sorts of
 protective gear may be bought and sold here. The entrance to the
 Armory is a `2`.
-
 
 #### `The Weaponsmith's Shop`
 
@@ -1581,26 +1652,22 @@ The Weaponsmith’s Shop is where the town’s weapons are fashioned.
 Hand and missile weapons may be purchased and sold here, along with
 arrows, bolts, and shots. The entrance to the Weaponsmith’s is a `3`.
 
-
 #### `The Temple`
 
 The Temple deals in healing and restoration potions, as well as
 bless scrolls, word of recall scrolls, some approved priestly
 weapons, etc. The entrance to the Temple is a `4`.
 
-
 #### `The Alchemy Shop`
 
 The Alchemy Shop deals in all manner of potions and scrolls. The
 entrance to the Alchemy Shop is a `5`.
-
 
 #### `The Magic User's Shop`
 
 The Magic User’s Shop is the most expensive of all the stores. It
 deals in all sorts of rings, wands, amulets, and staves. The
 entrance to the Magic Shop is a `6`.
-
 
 ## 8. Within The Dungeon
 
@@ -1625,7 +1692,6 @@ displayed at random intervals. Once a torch is burnt out, it is useless
 and can be dropped. A lamp or lantern can be refilled with oil by using
 the Fill `F` command, however the character must be carrying extra oil
 to refill a lantern.
-
 
 ## 9. Attacking and Being Attacked
 
@@ -1666,7 +1732,6 @@ to do damage, and so lead to more misses.
 In *Moria*, your character can wear any armor or wield any weapon – it
 is not limited by race or class.
 
-
 ### 9.1 Monster Memories
 
 There are hundreds of different creatures in the mines of *moria*, many
@@ -1686,7 +1751,6 @@ information not otherwise available, such as a armor class or hit dice.
 These are not explained, but may be useful to give the relative danger
 of each creature. This memory can be passed on to a new character even
 after the character dies, by means of a reduced save file.
-
 
 ### 9.2 The Character’s Weapon
 
@@ -1732,7 +1796,6 @@ to receive benefit of its abilities.
 
 Special weapons are denoted by the following abbreviations:
 
-
 #### `DF - Defender.`
 
 A magical weapon that helps wielders defend themselves, thus
@@ -1743,20 +1806,17 @@ from paralyzation attacks, and help regenerate hit-points and mana
 faster. As a result of the regeneration ability, the character will
 use up food faster than normal while wielding such a weapon.
 
-
 #### `FB - Frost Brand.`
 
 A magical weapon of ice that delivers a cold critical to heat-based
 creatures. It will inflict one and a half times the normal damage
 when used against a heat-based creature.
 
-
 #### `FT - Flame Tongue.`
 
 A magical weapon of flame that delivers a heat critical to
 cold-based creatures. It will inflict one and a half times the
 normal damage when used against cold-based or inflammable creatures.
-
 
 #### `HA - Holy Avenger.`
 
@@ -1766,7 +1826,6 @@ wielder. This weapon will do extra damage when used against evil and
 undead creatures, and will also give the ability to see invisible
 creatures.
 
-
 #### `SA - Slay Animal.`
 
 A Slay Animal weapon is a special-purpose weapon whose sole intent
@@ -1775,20 +1834,17 @@ any creature natural to the world. Therefore an orc would not be an
 animal, but a giant snake would be. This will inflict twice the
 normal amount of damage when used against an animal.
 
-
 #### `SD - Slay Dragon.`
 
 A Slay Dragon weapon is a special-purpose weapon whose sole intent
 is to destroy dragon-kind. Therefore, when used against a dragon,
 the amount of damage done is four times the normal amount.
 
-
 #### `SE - Slay Evil.`
 
 A Slay Evil weapon is a special-purpose weapon whose sole intent is
 to destroy all forms of evil. When used against an evil creature,
 either alive or undead, the damage done twice the normal amount.
-
 
 #### `SU - Slay Undead.`
 
@@ -1798,8 +1854,6 @@ by the intelligent undead, for a single blow from this weapon will
 inflict three times the normal amount of damage. This weapon also
 gives the ability to see invisible creatures, which is especially
 useful against undead, since many of them are normally invisible.
-
-
 
 ### 9.3 Body and Shield Bashes
 
@@ -1820,7 +1874,6 @@ the bash is a shield bash and will do more damage. In either case, a
 bash may throw an opponent off-balance for a number of rounds, allowing
 the character to get in a free hit or more. If the character is thrown
 off-balance, the opponent may get free hits. This is a risky attack.
-
 
 ### 9.4 The Character’s Armor Class
 
@@ -1857,7 +1910,6 @@ bulk of the armor makes it more difficult to swing a weapon freely.
 Some pieces of armor will possess special abilities denoted by the
 following abbreviations:
 
-
 #### `RA - Resist Acid.`
 
 A character using such an object will take only one-third normal
@@ -1883,8 +1935,6 @@ damage from electrical attacks.
 
 A character wearing armor with this ability will have resistance to
 Acid, Cold, Fire, and Lightning as explained in each part above.
-
-
 
 ### 9.5 Crowns
 
@@ -1926,8 +1976,6 @@ wearing this crown because of the regenerative effects.
 This crown looks impressive, and will increase charisma, but is
 otherwise not useful.
 
-
-
 ### 9.6 Magic Spells
 
 All characters except warriors are able to learn some form of magic
@@ -1946,7 +1994,6 @@ level of a key stat. For mages, rogues, and rangers, the key stat is
 intelligence, for priests and paladins the key stat is wisdom. The
 effect of the key stat is shown by the following table.
 
-
              Stat Level                 Factor
                 3-7                       0
                 8-17                      1
@@ -1956,14 +2003,12 @@ effect of the key stat is shown by the following table.
             18/90-18/99                   3
                18/100                     4
 
-
 The mana score is the factor times the experience level plus 1. If the
 key stat is 7 or less, the mana score will be zero (not one) and the
 character will not be able to use any spells. When attempting to cast a
 spell that calls for more mana than the character has, the rate of
 failure is much greater than normal. The character will faint for a few
 turns afterward, and there is a chance at damaging health too.
-
 
 #### 9.6.1 Priest Spells
 
@@ -1975,12 +2020,10 @@ the character, but the book is needed to cast the spell. Failure
 percentages and spell effectiveness are based on wisdom for priests and
 paladins.
 
-
 #### 9.6.1.1 Priest Spell Levels And Mana
 
 This is a table of all the spells, with the mana and level of
 achievement for Priests and Paladins.
-
 
                                Priest    Paladin
     (Beginner's Handbook)     Lv  Mana   Lv  Mana
@@ -2025,7 +2068,6 @@ achievement for Priests and Paladins.
     E  Resist Poison Gas      31  45     --  --
     F  Glyph of Warding       33  24     37  36
     G  Holy Word              39  32     39  38
-
 
 #### 9.6.1.2 Priest Spell Descriptions
 
@@ -2161,7 +2203,6 @@ Reduces the rate hit-points are lost due to poison.
 
 Attempts to cause undead creatures to flee.
 
-
 #### 9.6.2 Mage Spells
 
 Mage Spells are more powerful and offensive in nature than priest
@@ -2177,9 +2218,7 @@ and effectiveness is based on intelligence for mages, rangers, and
 rogues. Rangers can learn all but the most powerful offensive spell.
 Rogues cannot learn any offensive spell.
 
-
 #### 9.6.2.1 Mage Spell Levels And Mana
-
 
                                       Mage       Ranger      Rogue
     (Beginners-Magick)               Lv  Mana    Lv  Mana    Lv  Mana
@@ -2225,9 +2264,7 @@ Rogues cannot learn any offensive spell.
     G  Word of Destruction          33  21      37  30      --  --
     H  Genocide                     37  25      --  --      --  --
 
-
 Note: Rangers don't get spells until 3rd level, Rogues 5th level.
-
 
 #### 9.6.2.2 Mage Spell Descriptions
 
@@ -2355,12 +2392,9 @@ Causes a wall (or other stone object) to melt.
 
 Destroys the entire screen.
 
-
 For spells that come in numbered versions (Sleep I, II, III, etc), the
 higher numbers have a higher effectiveness, but greater change of spell
 failure and greater Mana cost.
-
-
 
 #### 9.6.3 Using Offensive Spells Against Monsters
 
@@ -2376,7 +2410,6 @@ little or no damage from such attacks. For example, a fire-breathing
 dragon will suffer little damage from a fire ball, but will suffer
 greatly from a frost ball. Also, undead creatures will not be affected
 by sleep spells, since they never sleep.
-
 
 ## 10. Objects Found In The Dungeon
 
@@ -2435,7 +2468,6 @@ And lastly, a final warning: not all objects are what they seem.
 Skeletons lying peacefully about the dungeon have been known to get
 up...
 
-
 ### 10.1 Cursed Objects
 
 Some objects, mainly armor and weapons, have had curses laid upon them.
@@ -2446,7 +2478,6 @@ be impossible to remove until a remove curse is done.
 When a cursed item is worn or wielded, the character will immediately
 feel that something has gone wrong. The item will also be inscribed
 "`damned`".
-
 
 ### 10.2 Mining
 
@@ -2477,7 +2508,6 @@ by using various magical spells and items. So it is a very good idea to
 always carry some kind of digging tool, even when tunneling for treasure
 is not a goal.
 
-
 ### 10.3 Staircases, Secret Doors, Passages and Rooms
 
 Staircases are the manner in which the character gets deeper, or climbs
@@ -2503,7 +2533,6 @@ it. If they close it behind them the character will have to search for
 the catch first. Once a secret door has been discovered, it is drawn as
 a known door and no more searching will be required to use it.
 
-
 ## 11. Winning The Game
 
 Once the character has progressed into killing dragons with but a mean
@@ -2525,7 +2554,6 @@ creature alive has been defeated, the character is ready to retire and
 cannot be saved. When you quit the game, the character receives a
 surprise bonus score.
 
-
 ## 12. Upon Death and Dying
 
 If the character falls below 0 hit-points, they have died and cannot be
@@ -2539,12 +2567,10 @@ which case the new character is generated exactly as if the file was not
 there, but the new character will find the monster memory containing all
 the experience of past incarnations.
 
-
 ## 13. Wizards
 
 There are rumors of *moria* Wizards which, if asked nicely, can explain
 details of the *moria* game that seem complicated to beginners.
-
 
 ## 14. Contributors
 
@@ -2583,7 +2609,6 @@ The following people have contributed to *moria*:
     - linux support [Ed note: GNU+Linux support]
 -   Eric Bazin
     - merge monster memories
-
 
 ## 15. Umoria Licence
 
