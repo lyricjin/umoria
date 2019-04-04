@@ -1561,6 +1561,9 @@ stop. Again, this is an option for nervous players; after all, there
 may be a dragon on the new screen, and running into a dragon can be
 bad for the character’s health.
 
+第6部分完整介绍了操作指令，太多了，我最后再来翻译。
+我先把后面的看完。
+
 ## 7. The Town Level
 
 The town level is where the character will begin the adventure. The town
@@ -1569,6 +1572,8 @@ a wall which surrounds the town. At the start of the game it will be
 daytime in the town, but later on the character may return to find that
 darkness has fallen. (Note that some spells may act differently in the
 town level.)
+
+城镇是角色开始冒险的地方。城镇有6大建筑，建筑有入口、NPC还有高墙包围城镇。游戏开始的时候是游戏里的白天，黑暗将会降临。
 
 ### 7.1 Townspeople
 
@@ -1581,10 +1586,14 @@ watching for a likely victim to mug. And finally, what town would be
 complete without a swarm of half-drunk warriors, who take offense or
 become annoyed just for the fun of it.
 
+城镇有很多不同的NPC。
+
 Most of the townspeople should be avoided by the largest possible
 distance when wandering from store to store. Fights will break out
 though, so be prepared. Since the character grew up in this world of
 intrigue, no experience is awarded for killing on the town level.
+
+在城镇打架杀敌没有任何的经验。
 
 ### 7.2 Supplies
 
@@ -1592,6 +1601,8 @@ The character will begin the adventure with some supplies already in the
 backpack. Use the Inventory `i` command to check what these supplies
 are. It will be necessary to buy other supplies before continuing into
 the dungeon, however, so be sure to enter each of the stores.
+
+i命令可以看到角色身上的补给物品。在进入地牢之前先去买点东西，最好去每个商店都逛逛。
 
 ### 7.3 Town Buildings
 
@@ -1605,6 +1616,8 @@ use the previous increment. But be warned that the owners can easily be
 insulted, and may even throw the character out for a while if you insult
 them too often. To enter a store, simply move onto the entrance
 represented by the numbers `1` through `6`.
+
+可以去商店和老板讨价还价。1~6代表了不同的商店。
 
 If the character consistently bargains well in a store, that is, you
 reach the final offer much more often than not, then the store owner
@@ -1633,6 +1646,8 @@ object, they will add it to their inventory. If it was a bad bargain,
 they simply throw the item away. In any case, the player may receive
 some knowledge of the item if another is encountered.
 
+上面有关商店的介绍我看不下去，好无聊啊。
+
 #### `The General Store`
 
 The General Store sells foods, drinks, some clothing, torches,
@@ -1640,11 +1655,16 @@ lamps, oil, shovels, picks, and spikes. All of these items, and some
 others, can be sold back to the General store for money. The
 entrance to the General Store is a `1`.
 
+杂货店卖食物、饮料、衣服、火把、灯、油、铲子、开锁器、钉子。
+这些东西还能卖掉。
+
 #### `The Armory`
 
 The Armory is where the town’s armor is fashioned. All sorts of
 protective gear may be bought and sold here. The entrance to the
 Armory is a `2`.
+
+2表示卖护甲的。
 
 #### `The Weaponsmith's Shop`
 
@@ -1652,22 +1672,30 @@ The Weaponsmith’s Shop is where the town’s weapons are fashioned.
 Hand and missile weapons may be purchased and sold here, along with
 arrows, bolts, and shots. The entrance to the Weaponsmith’s is a `3`.
 
+3是卖武器装备的。
+
 #### `The Temple`
 
 The Temple deals in healing and restoration potions, as well as
 bless scrolls, word of recall scrolls, some approved priestly
 weapons, etc. The entrance to the Temple is a `4`.
 
+神殿负责治疗还有药剂，还有祝福卷轴、复活卷轴、牧师武器。
+
 #### `The Alchemy Shop`
 
 The Alchemy Shop deals in all manner of potions and scrolls. The
 entrance to the Alchemy Shop is a `5`.
+
+炼金商店卖药剂和卷轴。
 
 #### `The Magic User's Shop`
 
 The Magic User’s Shop is the most expensive of all the stores. It
 deals in all sorts of rings, wands, amulets, and staves. The
 entrance to the Magic Shop is a `6`.
+
+法术商店卖戒指、法杖、符文等等。
 
 ## 8. Within The Dungeon
 
@@ -1693,7 +1721,11 @@ and can be dropped. A lamp or lantern can be refilled with oil by using
 the Fill `F` command, however the character must be carrying extra oil
 to refill a lantern.
 
+通过火把或者灯提供光源，火把光源50步就没了，但是灯是可以按 F 加油的。
+
 ## 9. Attacking and Being Attacked
+
+战斗相关的内容。
 
 Attacking is simple in *moria*. When moving into a creature, the
 character attacks it. The character can attack from a distance by firing
@@ -2413,6 +2445,8 @@ by sleep spells, since they never sleep.
 
 ## 10. Objects Found In The Dungeon
 
+地牢里可以发现的物体。
+
 The mines are full of objects just waiting to be picked up and used. How
 did they get there? Well, the main source for useful items are all the
 foolish adventurers that proceeded into the dungeon beforehand. They get
@@ -2534,6 +2568,8 @@ the catch first. Once a secret door has been discovered, it is drawn as
 a known door and no more searching will be required to use it.
 
 ## 11. Winning The Game
+
+如何获得胜利。
 
 Once the character has progressed into killing dragons with but a mean
 glance and snap of the fingers, they may be ready to take on the Balrog.
